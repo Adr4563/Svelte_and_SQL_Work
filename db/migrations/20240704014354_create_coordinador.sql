@@ -1,0 +1,13 @@
+-- migrate:up
+CREATE TABLE Coordinador (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    DNI VARCHAR(8) NOT NULL,
+    Apellido VARCHAR(40) NOT NULL,
+    Nombre VARCHAR(40) NOT NULL,
+    id_ODPE INTEGER,
+    FOREIGN KEY(id_ODPE) REFERENCES ODPE(id) ON DELETE CASCADE
+);
+
+-- migrate:down
+
+DROP TABLE Coordinador;

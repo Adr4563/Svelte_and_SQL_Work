@@ -1,0 +1,156 @@
+CREATE TABLE IF NOT EXISTS "schema_migrations" (version varchar(128) primary key);
+CREATE TABLE condicion_recepcion (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  Nombre VARCHAR(20) NOT NULL,
+  Cantidad_daños INTEGER
+);
+CREATE TABLE cargo (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  Nombre VARCHAR(20) NOT NULL
+);
+CREATE TABLE local_votacion (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  Nombre VARCHAR(20) NOT NULL,
+  Direccion VARCHAR(30)
+);
+CREATE TABLE Paquete (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  Nombre VARCHAR(20) NOT NULL
+);
+CREATE TABLE Departamento (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  Nombre VARCHAR(20) NOT NULL
+);
+CREATE TABLE Provincia (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    NOmbre VARCHAR(40) NOT NULL,
+    id_departamento INTEGER,
+    FOREIGN KEY(id_departamento) REFERENCES Departamento(id) ON DELETE CASCADE
+);
+CREATE TABLE Distrito (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    Nombre VARCHAR(40) NOT NULL,
+    id_provincia INTEGER,
+    FOREIGN KEY(id_provincia) REFERENCES Provincia(id) ON DELETE CASCADE
+);
+CREATE TABLE Representante_institucion (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    Apellido VARCHAR(40) NOT NULL,
+    Nombre VARCHAR(40) NOT NULL,
+    DNI VARCHAR(8) NOT NULL,
+    id_cargo INTEGER,
+    id_local_votacion INTEGER,
+    FOREIGN KEY(id_cargo) REFERENCES cargo(id) ON DELETE CASCADE
+    FOREIGN KEY(id_local_votacion) REFERENCES local_votacion(id) ON DELETE CASCADE
+);
+CREATE TABLE ODPE (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    Nombre VARCHAR(40) NOT NULL,
+    Direccion VARCHAR(100) NOT NULL,
+    id_departamento INTEGER,
+    FOREIGN KEY(id_departamento) REFERENCES Departamento(id) ON DELETE CASCADE
+);
+CREATE TABLE Material (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    Descripcion VARCHAR(100) NOT NULL,
+    id_paquete INTEGER,
+    FOREIGN KEY(id_paquete) REFERENCES Paquete(id) ON DELETE CASCADE
+);
+CREATE TABLE Coordinador (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    DNI VARCHAR(8) NOT NULL,
+    Apellido VARCHAR(40) NOT NULL,
+    Nombre VARCHAR(40) NOT NULL,
+    id_ODPE INTEGER,
+    FOREIGN KEY(id_ODPE) REFERENCES ODPE(id) ON DELETE CASCADE
+);
+CREATE TABLE Acta_recepcion (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    Codigo INTEGER,
+    Fecha_aprobacion DATE,
+    Hora_recepcion DATE,
+    Direccion VARCHAR(100) NOT NULL,
+    Fecha_electoral DATE,
+    id_condicion_recepcion INTEGER,
+    id_distrito INTEGER,
+    id_coordinador INTEGER,
+    id_represante_institucion INTEGER,
+    FOREIGN KEY(id_condicion_recepcion) REFERENCES condicion_recepcion(id) ON DELETE CASCADE
+    FOREIGN KEY(id_distrito) REFERENCES Distrito(id) ON DELETE CASCADE
+    FOREIGN KEY(id_coordinador) REFERENCES Coordinador(id) ON DELETE CASCADE
+    FOREIGN KEY(id_represante_institucion) REFERENCES Representante_institucion(id) ON DELETE CASCADE
+);
+CREATE TABLE Material_Local (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    Numero_mesa INTEGER,
+    id_local_votacion INTEGER,
+    id_material INTEGER,
+    FOREIGN KEY(id_local_votacion) REFERENCES local_votacion(id) ON DELETE CASCADE
+    FOREIGN KEY(id_material) REFERENCES Material(id) ON DELETE CASCADE
+);
+CREATE TABLE Personal_entrega (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    Nombre VARCHAR(40) NOT NULL,
+    Apellido VARCHAR(40) NOT NULL,
+    DNI VARCHAR(8) NOT NULL,
+    id_ODPE INTEGER,
+    FOREIGN KEY(id_ODPE) REFERENCES ODPE(id) ON DELETE CASCADE
+);
+CREATE TABLE Cargo_entrega (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    Codigo INTEGER,
+    Centro VARCHAR(30) NOT NULL,
+    Fecha DATE,
+    id_personal_entrega INTEGER,
+    id_local_votacion INTEGER,
+    id_ODPE INTEGER,
+    id_coordinador INTEGER,
+    FOREIGN KEY(id_ODPE) REFERENCES ODPE(id) ON DELETE CASCADE
+    FOREIGN KEY(id_local_votacion) REFERENCES local_votacion(id) ON DELETE CASCADE
+    FOREIGN KEY(id_coordinador) REFERENCES Coordinador(id) ON DELETE CASCADE
+    FOREIGN KEY(id_personal_entrega) REFERENCES Personal_entrega(id) ON DELETE CASCADE
+);
+CREATE TABLE Material_cargo_entrega (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    Cantidad INTEGER,
+    id_cargo_entrega INTEGER,
+    id_material INTEGER,
+    FOREIGN KEY(id_cargo_entrega) REFERENCES Cargo_entrega(id) ON DELETE CASCADE
+    FOREIGN KEY(id_material) REFERENCES Material(id) ON DELETE CASCADE
+);
+-- Dbmate schema migrations
+INSERT INTO "schema_migrations" (version) VALUES
+  ('20240611162436'),
+  ('20240611162553'),
+  ('20240611162609'),
+  ('20240611162617'),
+  ('20240611162635'),
+  ('20240611170042'),
+  ('20240704013224'),
+  ('20240704013555'),
+  ('20240704013924'),
+  ('20240704014050'),
+  ('20240704014233'),
+  ('20240704014354'),
+  ('20240704014522'),
+  ('20240704014631'),
+  ('20240704014838'),
+  ('20240704015003'),
+  ('20240704015134'),
+  ('20240704202723'),
+  ('20240704211951'),
+  ('20240704212614'),
+  ('20240704213254'),
+  ('20240704213429'),
+  ('20240704213856'),
+  ('20240704215958'),
+  ('20240704230630'),
+  ('20240704230730'),
+  ('20240704230908'),
+  ('20240704231133'),
+  ('20240704231257'),
+  ('20240704231414'),
+  ('20240704231603'),
+  ('20240704232037'),
+  ('20240704232233'),
+  ('20240714165251');

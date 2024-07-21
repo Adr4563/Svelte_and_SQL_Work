@@ -1,0 +1,33 @@
+{
+  "name": "svelte-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w & gunicorn app:APP -w 6 -b 0.0.0.0:5000 --reload",
+    "svelte": "rollup -c -w",
+    "start": "sirv public --no-clear",
+    "dbmate:new": "npx dbmate -d \"db/migrations\" -e \"DB\" new ",
+    "dbmate:up": "npx dbmate -d \"db/migrations\" -e \"DB\" up",
+    "dbmate:rollback": "npx dbmate -d \"db/migrations\" -e \"DB\" rollback"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-terser": "^0.4.0",
+    "rollup": "^3.15.0",
+    "rollup-plugin-css-only": "^4.3.0",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-svelte": "^7.1.2"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "sirv-cli": "^2.0.0",
+    "svelte": "^3.59.2",
+    "svelte-routing": "^2.13.0",
+    "sveltestrap": "^5.11.3",
+    "dbmate": "^2.15.0",
+    "sqlite3": "^5.1.7"
+  }
+}

@@ -1,0 +1,8 @@
+flask
+Jinja2
+gunicorn
+pylint
+requests
+pyyaml
+python-dotenv
+SQLAlchemy==1.4.39

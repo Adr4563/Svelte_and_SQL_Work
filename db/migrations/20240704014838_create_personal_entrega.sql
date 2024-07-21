@@ -1,0 +1,13 @@
+-- migrate:up
+CREATE TABLE Personal_entrega (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    Nombre VARCHAR(40) NOT NULL,
+    Apellido VARCHAR(40) NOT NULL,
+    DNI VARCHAR(8) NOT NULL,
+    id_ODPE INTEGER,
+    FOREIGN KEY(id_ODPE) REFERENCES ODPE(id) ON DELETE CASCADE
+);
+
+-- migrate:down
+
+DROP TABLE Personal_entrega;
