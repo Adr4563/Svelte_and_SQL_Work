@@ -5,6 +5,8 @@
   - [Instalación y Configuración 🛠️](#instalación-y-configuración-)
   - [Migraciones DBMATE 🔄](#migraciones-dbmate-)
   - [Tablas de Contenido 🗂️](#tablas-de-contenido-)
+  - [Referencias -> By PP 📚](#referencias--by-pp-)
+
 
 # Introducción 📖
 
@@ -62,3 +64,5 @@ http://127.0.0.1:5000/admin
 ```
 
 ![image](https://github.com/user-attachments/assets/cc481d53-1f9e-462f-9fd4-c060b739f23d)
+
+# Referencias -> By PP 📚
